@@ -40,7 +40,7 @@ namespace RestSharp.Authenticators.OAuth
 
         static OAuthTools()
         {
-#if !SILVERLIGHT && !WINDOWS_PHONE && !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if !SILVERLIGHT && !WINDOWS_PHONE && !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
             byte[] bytes = new byte[4];
 
             rng.GetNonZeroBytes(bytes);

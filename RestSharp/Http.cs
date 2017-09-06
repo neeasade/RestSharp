@@ -205,13 +205,13 @@ namespace RestSharp
         /// </summary>
         public bool PreAuthenticate { get; set; }
 
-#if FRAMEWORK || (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if FRAMEWORK || (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
         /// <summary>
         /// Proxy info to be sent with request
         /// </summary>
         public IWebProxy Proxy { get; set; }
 
-#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
 #else
         /// <summary>
         /// Caching policy for requests created with this wrapper.
@@ -482,7 +482,7 @@ namespace RestSharp
                                              Value = headerValue
                                          });
                 }
-#if !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
                 webResponse.Close();
 #else
                 webResponse.Dispose();

@@ -56,7 +56,7 @@ namespace RestSharp.Deserializers
         private object Map(object target, IDictionary<string, object> data)
         {
             Type objType = target.GetType();
-#if NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6
+#if NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0
             List<PropertyInfo> props = objType.GetTypeInfo().GetProperties()
                                               .Where(p => p.CanWrite)
                                               .ToList();
@@ -70,7 +70,7 @@ namespace RestSharp.Deserializers
             {
                 string name;
                 Type type = prop.PropertyType;
-#if !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
                 object[] attributes = prop.GetCustomAttributes(typeof(DeserializeAsAttribute), false);               
                 
                 if (attributes.Length > 0)
@@ -124,7 +124,7 @@ namespace RestSharp.Deserializers
         private IDictionary BuildDictionary(Type type, object parent)
         {
             IDictionary dict = (IDictionary) Activator.CreateInstance(type);
-#if NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6
+#if NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0
             Type keyType = type.GetTypeInfo().GetGenericArguments()[0];
             Type valueType = type.GetTypeInfo().GetGenericArguments()[1];
 #else
@@ -140,7 +140,7 @@ namespace RestSharp.Deserializers
 
                 object item;
 
-#if !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
                 if (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(List<>))
 #else
                 if (valueType.GetTypeInfo().IsGenericType && valueType.GetTypeInfo().GetGenericTypeDefinition() == typeof(List<>))    
@@ -162,19 +162,19 @@ namespace RestSharp.Deserializers
         private IList BuildList(Type type, object parent)
         {
             IList list = (IList) Activator.CreateInstance(type);
-#if NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6
+#if NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0
             Type listType = type.GetTypeInfo().GetInterfaces()
                                 .First
 #else
             Type listType = type.GetInterfaces()
                                 .First
 #endif
-#if !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
                 (x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IList<>));
 #else
                 (x => x.GetTypeInfo().IsGenericType && x.GetGenericTypeDefinition() == typeof(IList<>));
 #endif
-#if NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6
+#if NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0
             Type itemType = listType.GetTypeInfo().GetGenericArguments()[0];
 #else
             Type itemType = listType.GetGenericArguments()[0];
@@ -184,7 +184,7 @@ namespace RestSharp.Deserializers
             {
                 foreach (object element in (IList) parent)
                 {
-#if !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
                     if (itemType.IsPrimitive)
 #else
                     if (itemType.GetTypeInfo().IsPrimitive)
@@ -231,7 +231,7 @@ namespace RestSharp.Deserializers
             string stringValue = Convert.ToString(value, this.Culture);
 
             // check for nullable and extract underlying type
-#if !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
 #else
             if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
@@ -243,7 +243,7 @@ namespace RestSharp.Deserializers
                     return null;
                 }
 
-#if NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6
+#if NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0
                 type = type.GetTypeInfo().GetGenericArguments()[0];
 #else
                 type = type.GetGenericArguments()[0];
@@ -259,7 +259,7 @@ namespace RestSharp.Deserializers
                 type = value.GetType();
             }
 
-#if !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
             if (type.IsPrimitive)
             {
                 return value.ChangeType(type, this.Culture);
@@ -348,7 +348,7 @@ namespace RestSharp.Deserializers
                 // This should handle ISO 8601 durations
                 return XmlConvert.ToTimeSpan(stringValue);
             }
-#if !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if !WINDOWS_UWP && !(NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
             else if (type.IsGenericType)
 #else
             else if (type.GetTypeInfo().IsGenericType)
@@ -358,7 +358,7 @@ namespace RestSharp.Deserializers
 
                 if (genericTypeDef == typeof(IEnumerable<>))
                 {
-#if NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6
+#if NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0
                     Type itemType = type.GetTypeInfo().GetGenericArguments()[0];
 #else
                     Type itemType = type.GetGenericArguments()[0];

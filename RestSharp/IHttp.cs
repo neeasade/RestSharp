@@ -110,7 +110,7 @@ namespace RestSharp
 
         HttpWebRequest AsGetAsync(Action<HttpResponse> action, string httpMethod);
 
-#if FRAMEWORK || (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if FRAMEWORK || (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
         HttpResponse Delete();
 
         HttpResponse Get();

@@ -131,7 +131,7 @@ namespace RestSharp
         /// </summary>
         bool UseDefaultCredentials { get; set; }
 
-#if FRAMEWORK || NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6
+#if FRAMEWORK || NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0
         /// <summary>
         /// Adds a file to the Files collection to be included with a POST or PUT request 
         /// (other methods do not support file uploads).

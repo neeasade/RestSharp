@@ -16,7 +16,7 @@
 
 #endregion
 
-#if FRAMEWORK || (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if FRAMEWORK || (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
 
 using System;
 using System.IO;
@@ -139,7 +139,7 @@ namespace RestSharp
 
         partial void AddSyncHeaderActions()
         {
-#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
 #else
             //this.restrictedHeaderActions.Add("Connection", (r, v) => r.Connection = v);
             this.restrictedHeaderActions.Add("Connection", (r, v) => {
@@ -201,7 +201,7 @@ namespace RestSharp
         {
             try
             {
-#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
                 IAsyncResult asyncResult = request.BeginGetResponse(null, null);
                 return (HttpWebResponse)request.EndGetResponse(asyncResult);
 #else
@@ -237,14 +237,14 @@ namespace RestSharp
             if (this.HasBody || this.HasFiles || this.AlwaysMultipartFormData)
             {
 #if !WINDOWS_PHONE
-#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
 #else
                 webRequest.ContentLength = this.CalculateContentLength();
 #endif
 #endif
             }
 
-#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
             var asyncResult = webRequest.BeginGetRequestStream(null, null);
             using (Stream requestStream = webRequest.EndGetRequestStream(asyncResult))
 #else
@@ -273,7 +273,7 @@ namespace RestSharp
             HttpWebRequest webRequest = (HttpWebRequest) WebRequest.Create(url);
 
             webRequest.UseDefaultCredentials = this.UseDefaultCredentials;
-#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
 #else
             webRequest.PreAuthenticate = this.PreAuthenticate;
             webRequest.ServicePoint.Expect100Continue = false;
@@ -285,7 +285,7 @@ namespace RestSharp
             webRequest.Method = method;
 
             // make sure Content-Length header is always sent since default is -1
-#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
 #else
             if (!this.HasFiles && !this.AlwaysMultipartFormData)
             {
@@ -302,7 +302,7 @@ namespace RestSharp
             }
 #endif
 
-#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
 #else
             if (this.UserAgent.HasValue())
             {
@@ -325,7 +325,7 @@ namespace RestSharp
                 webRequest.Credentials = this.Credentials;
             }
 
-#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
 #else
             if (this.Proxy != null)
             {
@@ -340,7 +340,7 @@ namespace RestSharp
             }
 #endif
 
-#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
 #else
             webRequest.AllowAutoRedirect = this.FollowRedirects;
 

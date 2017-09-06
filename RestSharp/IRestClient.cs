@@ -66,7 +66,7 @@ namespace RestSharp
 
         RestRequestAsyncHandle ExecuteAsync<T>(IRestRequest request, Action<IRestResponse<T>, RestRequestAsyncHandle> callback);
 
-#if FRAMEWORK || (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if FRAMEWORK || (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
         IRestResponse Execute(IRestRequest request);
 
         IRestResponse<T> Execute<T>(IRestRequest request) where T : new();
@@ -143,7 +143,7 @@ namespace RestSharp
 
         void ClearHandlers();
 
-#if FRAMEWORK || (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if FRAMEWORK || (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
         IRestResponse ExecuteAsGet(IRestRequest request, string httpMethod);
 
         IRestResponse ExecuteAsPost(IRestRequest request, string httpMethod);
@@ -153,7 +153,7 @@ namespace RestSharp
         IRestResponse<T> ExecuteAsPost<T>(IRestRequest request, string httpMethod) where T : new();
 #endif
 
-#if NET4 || MONODROID || MONOTOUCH || WP8 || WINDOWS_UWP || (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD1_6)
+#if NET4 || MONODROID || MONOTOUCH || WP8 || WINDOWS_UWP || (NETCORE50 || NETSTANDARD1_5 || NETSTANDARD2_0)
         /// <summary>
         /// Executes the request and callback asynchronously, authenticating if needed
         /// </summary>
